@@ -22,7 +22,10 @@ def main():
             "benchmark": best["name"],
             "spread_to_benchmark": '%.2f' % abs(cbond["bondYield"] - best["bondYield"]) + '%'
         })
-    print results
+    # Print results to stdout
+    print "bond,benchmark,spread_to_benchmark"
+    for result in results:
+        print '%s,%s,%s' % (result["bond"], result["benchmark"], result["spread_to_benchmark"])
 
 # Populate the government and corporate bond lists
 def populateLists(filename):
