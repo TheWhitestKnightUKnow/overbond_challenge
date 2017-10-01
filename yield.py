@@ -7,13 +7,20 @@ def main():
     if len(sys.argv) < 2 or sys.argv[1] == '-h' or sys.argv[1] == '--help':
         print "Please pass me a csv file to parse!"
         return
+    corporate_bonds, government_bonds = populateLists(sys.argv[1])
+    #Main logic
+    print corporate_bonds
+    print government_bonds
+
+# Populate the government and corporate bond lists
+def populateLists(filename):
     try:
         # Otherwise, open up the file...
-        bondinfo = open(sys.argv[1], 'rb')
+        bondinfo = open(filename, 'rb')
     except IOError as e:
         print "Yield.py failed to open this file: " + sys.argv[1]
         print "Please pass it a valid csv file containing bond information!"
-        return
+        quit()
     else:
         # ...and parse its rows.
         corporate_bonds  = []
@@ -26,7 +33,7 @@ def main():
                 corporate_bonds.append({
                     "name": row[0],
                     "term": float(row[2].split(' ')[0]),
-                    "yield": float(row[3][:-1])
+                    "yield" : float(row[3][:-1])
                 })
             elif row[1] == 'government':
                 government_bonds.append({
@@ -36,7 +43,8 @@ def main():
                 })
             else:
                 print 'This CSV contained a bond that wasn\'t government or corporate!'
-                return
+                quit()
+    return corporate_bonds, government_bonds
 
 main()
 
