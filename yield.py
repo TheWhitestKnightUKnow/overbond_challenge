@@ -9,8 +9,20 @@ def main():
         return
     corporate_bonds, government_bonds = populateLists(sys.argv[1])
     #Main logic
-    print corporate_bonds
-    print government_bonds
+    results = []
+    for cbond in corporate_bonds:
+        bestDiff = float("inf")
+        best = {}
+        for gbond in government_bonds:
+            if abs(cbond["term"] - gbond["term"]) < bestDiff:
+                best = gbond
+                bestDiff = abs(cbond["term"] - gbond["term"])
+        results.append({
+            "bond": cbond["name"],
+            "benchmark": best["name"],
+            "spread_to_benchmark": '%.2f' % abs(cbond["bondYield"] - best["bondYield"]) + '%'
+        })
+    print results
 
 # Populate the government and corporate bond lists
 def populateLists(filename):
@@ -33,13 +45,13 @@ def populateLists(filename):
                 corporate_bonds.append({
                     "name": row[0],
                     "term": float(row[2].split(' ')[0]),
-                    "yield" : float(row[3][:-1])
+                    "bondYield" : float(row[3][:-1])
                 })
             elif row[1] == 'government':
                 government_bonds.append({
                     "name": row[0],
                     "term": float(row[2].split(' ')[0]),
-                    "yield": float(row[3][:-1])
+                    "bondYield": float(row[3][:-1])
                 })
             else:
                 print 'This CSV contained a bond that wasn\'t government or corporate!'
