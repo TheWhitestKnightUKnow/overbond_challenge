@@ -42,18 +42,18 @@ def populateLists(filename):
         government_bonds = []
         reader = csv.reader(bondinfo, delimiter=',')
         for row in reader:
-            if row[0] == 'bond': # first row
+            if row[1] == 'type': # first row
                 continue
             elif row[1] == 'corporate':
                 corporate_bonds.append({
                     "name": row[0],
-                    "term": float(row[2].split(' ')[0]),
+                    round(float(row[2].split(' ')[0]), 2),
                     "bondYield" : float(row[3][:-1])
                 })
             elif row[1] == 'government':
                 government_bonds.append({
                     "name": row[0],
-                    "term": float(row[2].split(' ')[0]),
+                    round(float(row[2].split(' ')[0]), 2),
                     "bondYield": float(row[3][:-1])
                 })
             else:
