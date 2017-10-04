@@ -47,13 +47,13 @@ def populateLists(filename):
             elif row[1] == 'corporate':
                 corporate_bonds.append({
                     "name": row[0],
-                    round(float(row[2].split(' ')[0]), 2),
+                    "term": float(row[2].split(' ')[0]),
                     "bondYield" : float(row[3][:-1])
                 })
             elif row[1] == 'government':
                 government_bonds.append({
                     "name": row[0],
-                    round(float(row[2].split(' ')[0]), 2),
+                    "term": float(row[2].split(' ')[0]),
                     "bondYield": float(row[3][:-1])
                 })
             else:
